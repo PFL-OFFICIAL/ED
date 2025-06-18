@@ -60,10 +60,6 @@
       transform: scale(1.03);
     }
 
-    .card img {
-      width: 100%;
-      border-radius: 8px;
-    }
 
     .card h3 {
       margin: 0.5rem 0 0.2rem;
@@ -133,7 +129,7 @@
         const cardElement = document.createElement("div");
         cardElement.className = "card";
         cardElement.innerHTML = `
-          <img src="https://via.placeholder.com/200x280.png?text=${encodeURIComponent(card.name)}" alt="${card.name}">
+        
           <h3>${card.name}</h3>
           <p><strong>Health:</strong> ${card.health}</p>
           <p><strong>Type:</strong> ${card.type}</p>
