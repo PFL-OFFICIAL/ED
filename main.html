@@ -106,7 +106,7 @@
     }
 
     #loader p {
-      margin-top: 1rem;
+      margin: 0.6rem 0 0;
       font-size: 1.2rem;
       color: #4caf50;
     }
@@ -117,6 +117,7 @@
   <div id="loader">
     <div class="spinner"></div>
     <p>Loading cards...</p>
+    <p>Loading booster packs...</p>
   </div>
 
   <header>
@@ -212,30 +213,19 @@
       let filtered = cards.filter(card =>
         card.name.toLowerCase().includes(searchInput.value.toLowerCase())
       );
-
       const sortValue = sortSelect.value;
       if (sortValue === "rarity") {
         const rarityOrder = { "Common": 1, "Rare": 2, "Epic": 3, "Legendary": 4, "Mythic": 5 };
-        filtered.sort((a, b) => {
-          const rankA = rarityOrder[a.rarity] || 999;
-          const rankB = rarityOrder[b.rarity] || 999;
-          return rankA - rankB;
-        });
+        filtered.sort((a, b) => (rarityOrder[a.rarity] || 999) - (rarityOrder[b.rarity] || 999));
       } else if (sortValue === "copies") {
-        filtered.sort((a, b) => {
-          const copiesA = isNaN(a.copies) ? 0 : parseInt(a.copies);
-          const copiesB = isNaN(b.copies) ? 0 : parseInt(b.copies);
-          return copiesB - copiesA;
-        });
+        filtered.sort((a, b) => (isNaN(b.copies) ? 0 : parseInt(b.copies)) - (isNaN(a.copies) ? 0 : parseInt(a.copies)));
       }
-
       renderCards(filtered);
     }
 
     searchInput.addEventListener("input", filterAndSortCards);
     sortSelect.addEventListener("change", filterAndSortCards);
 
-    // Simulate loader delay
     window.addEventListener("load", () => {
       setTimeout(() => {
         document.getElementById("loader").style.display = "none";
