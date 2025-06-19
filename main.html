@@ -60,7 +60,6 @@
       transform: scale(1.03);
     }
 
-
     .card h3 {
       margin: 0.5rem 0 0.2rem;
     }
@@ -88,7 +87,6 @@
     <section id="card-list">
       <h2>Available Cards</h2>
 
-      <!-- Search and Sort Controls -->
       <div class="controls">
         <input type="text" id="searchInput" placeholder="Search by card name...">
         <select id="sortSelect">
@@ -129,7 +127,6 @@
         const cardElement = document.createElement("div");
         cardElement.className = "card";
         cardElement.innerHTML = `
-        
           <h3>${card.name}</h3>
           <p><strong>Health:</strong> ${card.health}</p>
           <p><strong>Type:</strong> ${card.type}</p>
@@ -148,8 +145,22 @@
       );
 
       const sortValue = sortSelect.value;
+
       if (sortValue === "rarity") {
-        filtered.sort((a, b) => a.rarity.localeCompare(b.rarity));
+        const rarityOrder = {
+          "Common": 1,
+          "Rare": 2,
+          "Epic": 3,
+          "Legendary": 4,
+          "Mythic": 5
+        };
+
+        filtered.sort((a, b) => {
+          const rankA = rarityOrder[a.rarity] || 999;
+          const rankB = rarityOrder[b.rarity] || 999;
+          return rankA - rankB;
+        });
+
       } else if (sortValue === "copies") {
         filtered.sort((a, b) => {
           const copiesA = isNaN(a.copies) ? 0 : parseInt(a.copies);
