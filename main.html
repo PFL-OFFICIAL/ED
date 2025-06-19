@@ -11,29 +11,24 @@
       margin: 0;
       color: #333;
     }
-
     header {
       background-color: #4caf50;
       color: white;
       padding: 1.5rem;
       text-align: center;
     }
-
     main {
       padding: 2rem;
     }
-
     h2 {
       margin-bottom: 1rem;
     }
-
     .controls {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       margin-bottom: 2rem;
     }
-
     .controls input,
     .controls select {
       padding: 0.5rem;
@@ -41,13 +36,11 @@
       border-radius: 6px;
       border: 1px solid #ccc;
     }
-
     #cards-container, #packs-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 1rem;
     }
-
     .card, .pack {
       background-color: white;
       border-radius: 12px;
@@ -55,28 +48,22 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       transition: transform 0.2s;
     }
-
     .card:hover, .pack:hover {
       transform: scale(1.03);
     }
-
     .card h3, .pack h3 {
       margin: 0.5rem 0 0.2rem;
     }
-
     .card p, .pack p {
       margin: 0.2rem 0;
       font-size: 0.9rem;
     }
-
     footer {
       text-align: center;
       padding: 1rem;
       background-color: #eee;
       margin-top: 3rem;
     }
-
-    /* Loader Styles */
     #loader {
       position: fixed;
       top: 0;
@@ -92,7 +79,6 @@
       opacity: 1;
       transition: opacity 0.6s ease;
     }
-
     .spinner {
       border: 8px solid #f3f3f3;
       border-top: 8px solid #4caf50;
@@ -101,12 +87,10 @@
       height: 80px;
       animation: spin 1s linear infinite;
     }
-
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
     #loader p {
       margin: 1rem 0 0;
       font-size: 1.3rem;
@@ -116,122 +100,140 @@
 </head>
 <body>
 
-  <div id="loader">
-    <div class="spinner"></div>
-    <p id="loader-text">Loading cards</p>
-  </div>
+<div id="loader">
+  <div class="spinner"></div>
+  <p id="loader-text">Loading cards</p>
+</div>
 
-  <header>
-    <h1>Epic Doodles TCG</h1>
-    <p>Collect, battle, and trade your favorite cards!</p>
-  </header>
+<header>
+  <h1>Epic Doodles TCG</h1>
+  <p>Collect, battle, and trade your favorite cards!</p>
+</header>
 
-  <main>
-    <section id="card-list">
-      <h2>Available Cards</h2>
-      <div class="controls">
-        <input type="text" id="searchInput" placeholder="Search by card name...">
-        <select id="sortSelect">
-          <option value="">Sort By</option>
-          <option value="rarity">Rarity (Lowest-Highest)</option>
-          <option value="copies">Copies (Highest First)</option>
-        </select>
-      </div>
-      <div id="cards-container"></div>
-    </section>
+<main>
+  <section id="card-list">
+    <h2>Available Cards</h2>
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search by card name...">
+      <select id="sortSelect">
+        <option value="">Sort By</option>
+        <option value="rarity">Rarity (Lowest-Highest)</option>
+        <option value="copies">Copies (Highest First)</option>
+      </select>
+    </div>
+    <div id="cards-container"></div>
+  </section>
 
-    <section id="booster-packs">
-      <h2>Booster Packs In Stock</h2>
-      <div id="packs-container"></div>
-    </section>
-  </main>
+  <section id="booster-packs">
+    <h2>Booster Packs In Stock</h2>
+    <div id="packs-container"></div>
+  </section>
+</main>
 
-  <footer>
-    <p>&copy; 2025 Epic Doodles. All rights reserved.</p>
-  </footer>
+<footer>
+  <p>&copy; 2025 Epic Doodles. All rights reserved.</p>
+</footer>
 
-  <script>
-    const cards = [ /* your existing card data */ ];
-    const boosterPacks = [ { name: "Booster Pack", stock: 1, price: "$5.99", contains: "All Rarities" } ];
-    const container = document.getElementById("cards-container");
-    const packsContainer = document.getElementById("packs-container");
-    const searchInput = document.getElementById("searchInput");
-    const sortSelect = document.getElementById("sortSelect");
+<script>
+  const cards = [
+    { name: "Siren", health: 200, type: "Water", copies: 2, power: "Controls anyone who passes by", specialMove: "Can create a whirlpool", rarity: "Mythic" },
+    { name: "FixerUper", health: "N/A", type: "Utility", copies: 1, power: "Gives all cards full health and stamina", specialMove: "None", rarity: "N/A" },
+    { name: "VamiGirl", health: 100, type: "Blood", copies: 1, power: "Controls blood flow", specialMove: "Invisible Attacks", rarity: "Rare" },
+    { name: "Mighty Water Python", health: 150, type: "Water", copies: 1, power: "Creates Tsunami that kills you", specialMove: "Death Wrap", rarity: "Legendary" },
+    { name: "Earth Nymph", health: 75, type: "Earth", copies: 0, power: "Slams a mountain on opponent", specialMove: "Strangles opponent with tree roots; depletes health to half", rarity: "Epic" },
+    { name: "Ballerina", health: 80, type: "Human", copies: 1, power: "Kicks deal 50 Damage", specialMove: "None", rarity: "Common" },
+    { name: "Lynter", health: 75, type: "Monster", copies: 1, power: "Turn Enemy Minds against them", specialMove: "None", rarity: "Common" },
+    { name: "Painter", health: 110, type: "Earth", copies: 1, power: "Flaming Rainbows of Paint", specialMove: "None", rarity: "Rare" },
+    { name: "Epic Pirate", health: 100, type: "Human", copies: 1, power: "Turns enemy into gold", specialMove: "Sword that makes enemy's health go to 50 HP", rarity: "Epic" },
+    { name: "Little Wolf Riding Hood", health: 75, type: "Earth", copies: 1, power: "Can transform into a wolf", specialMove: "None", rarity: "Rare" },
+    { name: "Pegasus", health: 90, type: "Earth", copies: 0, power: "Sunshine blinds opponent", specialMove: "Throws opponent into sun", rarity: "Mythic" },
+    { name: "Centaur", health: 75, type: "Earth", copies: 0, power: "Stomps and splits earth, traps opponent", specialMove: "Club turns into a sword and depletes health to 75%", rarity: "Epic" }
+  ];
 
-    function renderCards(filteredCards) {
-      container.innerHTML = '';
-      filteredCards.forEach(card => {
-        const cardElement = document.createElement("div");
-        cardElement.className = "card";
-        cardElement.innerHTML = `
-          <h3>${card.name}</h3>
-          <p><strong>Health:</strong> ${card.health}</p>
-          <p><strong>Type:</strong> ${card.type}</p>
-          <p><strong>Copies:</strong> ${card.copies}</p>
-          <p><strong>Power:</strong> ${card.power}</p>
-          <p><strong>Special Move:</strong> ${card.specialMove}</p>
-          <p><strong>Rarity:</strong> ${card.rarity}</p>
-        `;
-        container.appendChild(cardElement);
-      });
-    }
+  const boosterPacks = [
+    { name: "Booster Pack", stock: 1, price: "$5.99", contains: "All Rarities" }
+  ];
 
-    function renderPacks() {
-      packsContainer.innerHTML = '';
-      boosterPacks.forEach(pack => {
-        const packElement = document.createElement("div");
-        packElement.className = "pack";
-        packElement.innerHTML = `
-          <h3>${pack.name}</h3>
-          <p><strong>In Stock:</strong> ${pack.stock}</p>
-          <p><strong>Contains:</strong> ${pack.contains}</p>
-          <p><strong>Price:</strong> ${pack.price}</p>
-        `;
-        packsContainer.appendChild(packElement);
-      });
-    }
+  const container = document.getElementById("cards-container");
+  const packsContainer = document.getElementById("packs-container");
+  const searchInput = document.getElementById("searchInput");
+  const sortSelect = document.getElementById("sortSelect");
 
-    function filterAndSortCards() {
-      let filtered = cards.filter(card =>
-        card.name.toLowerCase().includes(searchInput.value.toLowerCase())
-      );
-      const sortValue = sortSelect.value;
-      if (sortValue === "rarity") {
-        const rarityOrder = { "Common": 1, "Rare": 2, "Epic": 3, "Legendary": 4, "Mythic": 5 };
-        filtered.sort((a, b) => (rarityOrder[a.rarity] || 999) - (rarityOrder[b.rarity] || 999));
-      } else if (sortValue === "copies") {
-        filtered.sort((a, b) => (parseInt(b.copies) || 0) - (parseInt(a.copies) || 0));
-      }
-      renderCards(filtered);
-    }
-
-    searchInput.addEventListener("input", filterAndSortCards);
-    sortSelect.addEventListener("change", filterAndSortCards);
-
-    // Loader text + dot animation
-    let dotCount = 0;
-    let currentText = "Loading cards";
-    const loaderText = document.getElementById("loader-text");
-    const dotInterval = setInterval(() => {
-      dotCount = (dotCount + 1) % 4;
-      loaderText.textContent = currentText + '.'.repeat(dotCount);
-    }, 400);
-
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        currentText = "Loading booster packs";
-      }, 1500);
-
-      setTimeout(() => {
-        clearInterval(dotInterval);
-        document.getElementById("loader").style.opacity = "0";
-        setTimeout(() => {
-          document.getElementById("loader").style.display = "none";
-          renderCards(cards);
-          renderPacks();
-        }, 600);
-      }, 3000);
+  function renderCards(filteredCards) {
+    container.innerHTML = '';
+    filteredCards.forEach(card => {
+      const cardElement = document.createElement("div");
+      cardElement.className = "card";
+      cardElement.innerHTML = `
+        <h3>${card.name}</h3>
+        <p><strong>Health:</strong> ${card.health}</p>
+        <p><strong>Type:</strong> ${card.type}</p>
+        <p><strong>Copies:</strong> ${card.copies}</p>
+        <p><strong>Power:</strong> ${card.power}</p>
+        <p><strong>Special Move:</strong> ${card.specialMove}</p>
+        <p><strong>Rarity:</strong> ${card.rarity}</p>
+      `;
+      container.appendChild(cardElement);
     });
-  </script>
+  }
+
+  function renderPacks() {
+    packsContainer.innerHTML = '';
+    boosterPacks.forEach(pack => {
+      const packElement = document.createElement("div");
+      packElement.className = "pack";
+      packElement.innerHTML = `
+        <h3>${pack.name}</h3>
+        <p><strong>In Stock:</strong> ${pack.stock}</p>
+        <p><strong>Contains:</strong> ${pack.contains}</p>
+        <p><strong>Price:</strong> ${pack.price}</p>
+      `;
+      packsContainer.appendChild(packElement);
+    });
+  }
+
+  function filterAndSortCards() {
+    let filtered = cards.filter(card =>
+      card.name.toLowerCase().includes(searchInput.value.toLowerCase())
+    );
+    const sortValue = sortSelect.value;
+    if (sortValue === "rarity") {
+      const rarityOrder = { "Common": 1, "Rare": 2, "Epic": 3, "Legendary": 4, "Mythic": 5 };
+      filtered.sort((a, b) => (rarityOrder[a.rarity] || 999) - (rarityOrder[b.rarity] || 999));
+    } else if (sortValue === "copies") {
+      filtered.sort((a, b) => (parseInt(b.copies) || 0) - (parseInt(a.copies) || 0));
+    }
+    renderCards(filtered);
+  }
+
+  searchInput.addEventListener("input", filterAndSortCards);
+  sortSelect.addEventListener("change", filterAndSortCards);
+
+  // Loader text + dot animation
+  let dotCount = 0;
+  let currentText = "Loading cards";
+  const loaderText = document.getElementById("loader-text");
+  const dotInterval = setInterval(() => {
+    dotCount = (dotCount + 1) % 4;
+    loaderText.textContent = currentText + '.'.repeat(dotCount);
+  }, 400);
+
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      currentText = "Loading booster packs";
+    }, 1500);
+
+    setTimeout(() => {
+      clearInterval(dotInterval);
+      document.getElementById("loader").style.opacity = "0";
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+        renderCards(cards);
+        renderPacks();
+      }, 600);
+    }, 3000);
+  });
+</script>
+
 </body>
 </html>
