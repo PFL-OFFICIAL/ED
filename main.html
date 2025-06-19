@@ -42,13 +42,13 @@
       border: 1px solid #ccc;
     }
 
-    #cards-container {
+    #cards-container, #packs-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 1rem;
     }
 
-    .card {
+    .card, .pack {
       background-color: white;
       border-radius: 12px;
       padding: 1rem;
@@ -56,15 +56,15 @@
       transition: transform 0.2s;
     }
 
-    .card:hover {
+    .card:hover, .pack:hover {
       transform: scale(1.03);
     }
 
-    .card h3 {
+    .card h3, .pack h3 {
       margin: 0.5rem 0 0.2rem;
     }
 
-    .card p {
+    .card p, .pack p {
       margin: 0.2rem 0;
       font-size: 0.9rem;
     }
@@ -98,6 +98,11 @@
 
       <div id="cards-container"></div>
     </section>
+
+    <section id="booster-packs">
+      <h2>Booster Packs In Stock</h2>
+      <div id="packs-container"></div>
+    </section>
   </main>
 
   <footer>
@@ -117,7 +122,12 @@
       { name: "Centaur", health: 75, type: "Earth", copies: "0", power: "Stomps and splits earth, traps opponent", specialMove: "Club turns into a sword and depletes health to 75%", rarity: "Epic" }
     ];
 
+    const boosterPacks = [
+      { name: "Booster Pack", stock: 1, price: "$5.99", contains: "All raritys" },
+    ];
+
     const container = document.getElementById("cards-container");
+    const packsContainer = document.getElementById("packs-container");
     const searchInput = document.getElementById("searchInput");
     const sortSelect = document.getElementById("sortSelect");
 
@@ -139,6 +149,21 @@
       });
     }
 
+    function renderPacks() {
+      packsContainer.innerHTML = '';
+      boosterPacks.forEach(pack => {
+        const packElement = document.createElement("div");
+        packElement.className = "pack";
+        packElement.innerHTML = `
+          <h3>${pack.name}</h3>
+          <p><strong>In Stock:</strong> ${pack.stock}</p>
+          <p><strong>Contains:</strong> ${pack.contains}</p>
+          <p><strong>Price:</strong> ${pack.price}</p>
+        `;
+        packsContainer.appendChild(packElement);
+      });
+    }
+
     function filterAndSortCards() {
       let filtered = cards.filter(card =>
         card.name.toLowerCase().includes(searchInput.value.toLowerCase())
@@ -148,19 +173,13 @@
 
       if (sortValue === "rarity") {
         const rarityOrder = {
-          "Common": 1,
-          "Rare": 2,
-          "Epic": 3,
-          "Legendary": 4,
-          "Mythic": 5
+          "Common": 1, "Rare": 2, "Epic": 3, "Legendary": 4, "Mythic": 5
         };
-
         filtered.sort((a, b) => {
           const rankA = rarityOrder[a.rarity] || 999;
           const rankB = rarityOrder[b.rarity] || 999;
           return rankA - rankB;
         });
-
       } else if (sortValue === "copies") {
         filtered.sort((a, b) => {
           const copiesA = isNaN(a.copies) ? 0 : parseInt(a.copies);
@@ -176,6 +195,7 @@
     sortSelect.addEventListener("change", filterAndSortCards);
 
     renderCards(cards);
+    renderPacks();
   </script>
 </body>
 </html>
