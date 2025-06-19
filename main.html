@@ -75,9 +75,50 @@
       background-color: #eee;
       margin-top: 3rem;
     }
+
+    /* Loader Styles */
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #4caf50;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #loader p {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: #4caf50;
+    }
   </style>
 </head>
 <body>
+
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>Loading cards...</p>
+  </div>
+
   <header>
     <h1>Epic Doodles TCG</h1>
     <p>Collect, battle, and trade your favorite cards!</p>
@@ -118,14 +159,14 @@
       { name: "Earth Nymph", health: 75, type: "Earth", copies: "0", power: "Slams a mountain on opponent", specialMove: "Strangles opponent with tree roots; depletes health to half", rarity: "Epic" },
       { name: "Ballerina", health: 80, type: "Human", copies: 1, power: "Kicks deal 50 Damage", specialMove: "None", rarity: "Common" },
       { name: "Painter", health: 110, type: "Earth", copies: 1, power: "Flaming Rainbows of Paint", specialMove: "None", rarity: "Rare" },
-     { name: "Epic Pirate", health: 100, type: "Human", copies: 0, power: "Turns enemy into gold", specialMove: "Sword that makes enemy's health go to 50 HP", rarity: "Epic" },
+      { name: "Epic Pirate", health: 100, type: "Human", copies: 0, power: "Turns enemy into gold", specialMove: "Sword that makes enemy's health go to 50 HP", rarity: "Epic" },
       { name: "Little Wolf Riding Hood", health: 75, type: "Earth", copies: 1, power: "Can transform into a wolf", specialMove: "None", rarity: "Rare" },
       { name: "Pegasus", health: 90, type: "Earth", copies: "0", power: "Sunshine blinds opponent", specialMove: "Throws opponent into sun", rarity: "Mythic" },
       { name: "Centaur", health: 75, type: "Earth", copies: "0", power: "Stomps and splits earth, traps opponent", specialMove: "Club turns into a sword and depletes health to 75%", rarity: "Epic" }
     ];
 
     const boosterPacks = [
-      { name: "Booster Pack", stock: 1, price: "$5.99", contains: "All Rarities" },
+      { name: "Booster Pack", stock: 1, price: "$5.99", contains: "All Rarities" }
     ];
 
     const container = document.getElementById("cards-container");
@@ -172,11 +213,8 @@
       );
 
       const sortValue = sortSelect.value;
-
       if (sortValue === "rarity") {
-        const rarityOrder = {
-          "Common": 1, "Rare": 2, "Epic": 3, "Legendary": 4, "Mythic": 5
-        };
+        const rarityOrder = { "Common": 1, "Rare": 2, "Epic": 3, "Legendary": 4, "Mythic": 5 };
         filtered.sort((a, b) => {
           const rankA = rarityOrder[a.rarity] || 999;
           const rankB = rarityOrder[b.rarity] || 999;
@@ -196,8 +234,14 @@
     searchInput.addEventListener("input", filterAndSortCards);
     sortSelect.addEventListener("change", filterAndSortCards);
 
-    renderCards(cards);
-    renderPacks();
+    // Simulate loader delay
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+        renderCards(cards);
+        renderPacks();
+      }, 1200);
+    });
   </script>
 </body>
 </html>
