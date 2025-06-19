@@ -106,8 +106,8 @@
     }
 
     #loader p {
-      margin: 0.6rem 0 0;
-      font-size: 1.2rem;
+      margin: 1rem 0 0;
+      font-size: 1.3rem;
       color: #4caf50;
     }
   </style>
@@ -116,8 +116,7 @@
 
   <div id="loader">
     <div class="spinner"></div>
-    <p>Loading cards...</p>
-    <p>Loading booster packs...</p>
+    <p id="loader-text">Loading cards...</p>
   </div>
 
   <header>
@@ -227,11 +226,17 @@
     sortSelect.addEventListener("change", filterAndSortCards);
 
     window.addEventListener("load", () => {
+      const loaderText = document.getElementById("loader-text");
+
+      setTimeout(() => {
+        loaderText.textContent = "Loading booster packs...";
+      }, 1200);
+
       setTimeout(() => {
         document.getElementById("loader").style.display = "none";
         renderCards(cards);
         renderPacks();
-      }, 1200);
+      }, 2500);
     });
   </script>
 </body>
