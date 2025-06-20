@@ -96,6 +96,16 @@
       font-size: 1.3rem;
       color: #4caf50;
     }
+    .see-more-btn {
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+      border: none;
+      background-color: #4caf50;
+      color: white;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
@@ -160,9 +170,12 @@
   const searchInput = document.getElementById("searchInput");
   const sortSelect = document.getElementById("sortSelect");
 
-  function renderCards(filteredCards) {
+  let visibleCardCount = 5;
+
+  function renderCards(cardList) {
     container.innerHTML = '';
-    filteredCards.forEach(card => {
+    const cardsToShow = cardList.slice(0, visibleCardCount);
+    cardsToShow.forEach(card => {
       const cardElement = document.createElement("div");
       cardElement.className = "card";
       cardElement.innerHTML = `
@@ -176,6 +189,18 @@
       `;
       container.appendChild(cardElement);
     });
+
+    const remaining = cardList.length - visibleCardCount;
+    if (remaining > 0) {
+      const button = document.createElement("button");
+      button.textContent = `See ${remaining} more card${remaining > 1 ? 's' : ''}`;
+      button.className = 'see-more-btn';
+      button.onclick = () => {
+        visibleCardCount = cardList.length;
+        renderCards(cardList);
+      };
+      container.appendChild(button);
+    }
   }
 
   function renderPacks() {
@@ -204,13 +229,13 @@
     } else if (sortValue === "copies") {
       filtered.sort((a, b) => (parseInt(b.copies) || 0) - (parseInt(a.copies) || 0));
     }
+    visibleCardCount = 5;
     renderCards(filtered);
   }
 
   searchInput.addEventListener("input", filterAndSortCards);
   sortSelect.addEventListener("change", filterAndSortCards);
 
-  // Loader text + dot animation
   let dotCount = 0;
   let currentText = "Loading cards";
   const loaderText = document.getElementById("loader-text");
@@ -220,10 +245,7 @@
   }, 400);
 
   window.addEventListener("load", () => {
-    setTimeout(() => {
-      currentText = "Loading booster packs";
-    }, 1500);
-
+    setTimeout(() => { currentText = "Loading booster packs"; }, 1500);
     setTimeout(() => {
       clearInterval(dotInterval);
       document.getElementById("loader").style.opacity = "0";
